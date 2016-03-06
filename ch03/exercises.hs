@@ -2,7 +2,9 @@ listLen :: [a] -> Int
 listLen []     = 0
 listLen (_:xs) = 1 + (listLen xs)
 
---listMean :: [Int] -> Float
+listMean :: [Int] -> Float
+listMean []  = 0
+listMean xs = (fromIntegral (sum xs)) / (fromIntegral (length xs))
 
 listPal :: [a] -> [a]
 listPal [] = []
@@ -19,5 +21,4 @@ intersperse n l@(x:xs)
   | null l = []
   | null xs = x
   | otherwise = x ++ [n] ++ (intersperse n xs)
-
 
