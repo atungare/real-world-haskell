@@ -1,4 +1,5 @@
 import Data.Char
+import Data.List (isPrefixOf)
 
 myMap :: (a -> b) -> [a] -> [b]
 myMap _ [] = []
@@ -48,4 +49,18 @@ anyFold test ls = myFoldr f False ls
   where f l acc = (test l) || acc
 
 cycleFold :: [a] -> [a]
-cycleFold ls = ls ++ (cycleFold ls)
+cycleFold [] = error "empty list"
+cycleFold ls = myFoldr f (cycleFold ls) ls
+  where f l acc = l:acc
+
+myTails :: [a] -> [[a]]
+myTails []     = [[]]
+myTails l@(_:xs) = (l:(myTails xs))
+
+myCompose :: (b -> c) -> (a -> b) -> a -> c
+myCompose f g x = f (g x)
+
+myDlts :: String -> [String]
+myDlts = (filter ("DLT_" `isPrefixOf`)) . (map secondWord) . lines
+  where secondWord = (head . tail . words)
+
